@@ -9,7 +9,6 @@ from chromadb.utils import embedding_functions
 os.environ["GROQ_API_KEY"] = ""
 os.environ["HUGGINGFACEHUB_API_TOKEN"] = ""
 
-
 def extract_data(input_file):
 
     # Load the input file
