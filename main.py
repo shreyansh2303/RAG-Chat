@@ -5,31 +5,24 @@ from .vector_db import Collection
 from .llm import LLM
 
 
-def get_results(collection, query, num_results):
-
-    results = collection.query(
-        query_texts = [query],
-        n_results   = num_results
-    )
-    
-    combined_results = ""
-
-    for i, result in enumerate(results['documents'][0]):
-        combined_results += f"""Search result {i+1} is as follows: \"{result}\"      """
-
-    return combined_results
 
 
 def get_llm_output(llm, collection, user_query):
 
     num_results = 3
-    results = get_results(collection, user_query, num_results)
-    
+    results = collection.query(user_query, num_results)
+
+    combined_results = ""
+
+    for i, result in enumerate(results):
+        combined_results += f"""Search result {i+1} is as follows: \"{result}\"      """
+
+
     system_prompt = f"""
 Your task is to answer the user's query solely based on the search results from a document. These search results are from similarity matching the user's query to paragraphs in the document. 
 Here are the search results in the order of most similar to least similar: 
 
-{results} 
+{combined_results} 
  
 Only give an answer if it can be given from the data in the search results. Summarize what you want to say, don't mention which search result gave you the answer or even the fact that you got your results from the searches.
 Try getting the results from the most similar search results (search result 1 is most similar, search result {num_results} is least similar). 

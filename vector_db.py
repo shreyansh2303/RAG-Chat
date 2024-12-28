@@ -3,7 +3,6 @@ from chromadb.utils import embedding_functions
 
 
 class Collection():
-
     def __init__(self, path, sentence_transformer_model_name):
 
         chroma_client = chromadb.PersistentClient(path=path)
@@ -29,3 +28,13 @@ class Collection():
             documents=chunks,
             ids = ids
         )
+
+    def query(self, query, num_results):
+
+        results = self.collection.query(
+            query_texts = [query],
+            n_results   = num_results
+        )
+
+        return results['documents'][0]
+        
