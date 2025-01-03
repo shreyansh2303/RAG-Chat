@@ -1,3 +1,4 @@
 __pycache__
 .env
-vectordb
+vector_db
+notebook.ipynb
